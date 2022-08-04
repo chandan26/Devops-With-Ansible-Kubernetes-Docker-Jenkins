@@ -1,0 +1,24 @@
+---
+- hosts: ansible
+  
+  tasks:
+
+  - name: remove image
+    command: docker rmi regapp:latest
+    ignore_errors: yes
+  - name: Create Docker Image from Recived artiacts from JENKINS
+    command: docker build -t regapp:latest .
+    args:
+      chdir: /opt/ansible-jenkins-artif
+  - name: tag latest image and ready for pushing to docker hub
+    command: docker tag regapp:latest dockerdpydev/regapp:latest
+  
+  - name: docker push image to dockerhub
+    command: docker push dockerdpydev/regapp:latest
+
+
+- hosts: k8s
+  user: root
+  tasks:
+  - name: create a replicaset on Kubernetes node
+    command: kubectl create -f /root/Simple-DevOps-Project/Kubernetes/regapp-deploy.yml

@@ -1,0 +1,8 @@
+---
+- hosts: ansible
+  
+  tasks:
+  - name: Create Docker Image from Recived artiacts from JENKINS
+    command: docker build -t regapp:latest .
+    args:
+      chdir: /opt/ansible-jenkins-artif

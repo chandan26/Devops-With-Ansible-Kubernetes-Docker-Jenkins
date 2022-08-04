@@ -1,0 +1,7 @@
+---
+
+- hosts: k8s
+  user: root 
+  tasks:  
+  - name: create a replicaset on Kubernetes node
+    command: kubectl create -f /root/Simple-DevOps-Project/Kubernetes/regapp-deploy.yml
